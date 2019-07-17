@@ -5,45 +5,53 @@ using namespace std;
 double M=1.98847*pow(10,30);
 double G = 39.478;
 double f(double, double, double, double, double);
-double *leapFrog2Ord(double, double, double, double, int);
+void leapFrog(double, double, double, double, double, double);
 
 int main()
 {
-    /*int n =10000;
-    double h=(5.0)/(n-1);
-    double *l=leapFrog2Ord(0.0,5.0,0.1,0.0,n);
-    for(int i=0;i<n;i++)
-    {
-        cout<<h*i<<" "<<*l<<endl;
-        l++;
-    }*/
+    double anios =20;
+    double xini=0.1163;
+    double vxini=-6.35;
+    double yini=0.9772;
+    double vyini=0.606;
+    leapFrog(xini,vxini,yini,vyini,0.1,anios);
     return 0;
 }
 double f(double t, double x, double y, double vx, double vy)
-{
-    double *a=new double[2];
-    a[0]=-G*(M/(x*x+y*y))
-        
+{       
     return -G*(M/(x*x+y*y));
 }
-double *leapFrog2Ord(double Ti, double Tf, double X0, double V0, int N)
+void leapFrog(double x0, double xv0, double y0, double yv0, double deltat ,double anios)
 {
-    double deltat=(Tf-Ti)/(N-1);
-    double Vi=-f(Ti, X0, V0)*deltat*0.5+V0;
-    double *x= new double[N];
-    double v[N];
-    double t[N];
-    v[0]=Vi;
-    x[0]=X0;
-    t[0]=Ti;
+    int n=(anios/deltat)+1;
+    double xvi=-f(0, x0, y0, xv0, yv0)*deltat*0.5+xv0;
+    double yvi=-f(0, x0, y0, xv0, yv0)*deltat*0.5+xv0;
+    double x[n];
+    double y[n];
+    double xv[n];
+    double yv[n];
+    double t[n];
+    xv[0]=xvi;
+    yv[0]=yvi;
+    x[0]=x0;
+    y[0]=y0;
+    t[0]=0;
     
-    for(int i=0;i<N;i++)
+    for(int i=0;i<n;i++)
     {   
         t[i+1]=t[i]+deltat;
-        v[i+1]=f(t[i], x[i], v[i])*deltat +v[i];
-        x[i+1]=v[i+1]*deltat + x[i];
-       
+        xv[i+1]=f(t[i], x[i], xv[i], y[i], yv[i])*deltat +xv[i];
+        yv[i+1]=f(t[i], x[i], xv[i], y[i], yv[i])*deltat +yv[i];
+        x[i+1]=xv[i+1]*deltat + x[i];
+        y[i+1]=yv[i+1]*deltat + y[i];       
     }
-        
-    return x; 
+    
+    ofstream outfile;
+    outfile.open("leapFrog_"+std::to_string(deltat)+".dat");
+    for(int i=0;i<n;i++)
+    {
+        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<endl;
+    }
+    outfile.close();
+       
 }
