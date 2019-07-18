@@ -51,7 +51,7 @@ void euler(double x0, double xv0, double y0, double yv0, double deltat ,double a
     x[0]=x0;
     y[0]=y0;
     t[0]=0;
-    momento[0]=x[0]*yv[0]+y[0]*xv[0];
+    momento[0]=x[0]*yv[0]-y[0]*xv[0];
     energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0]);
     
     
@@ -61,10 +61,12 @@ void euler(double x0, double xv0, double y0, double yv0, double deltat ,double a
         t[i+1]=t[i]+deltat;
         xv[i+1]=-G*(M/pow(sqrt(x[i]*x[i]+y[i]*y[i]),3))*deltat*x[i] +xv[i];
         yv[i+1]=-G*(M/pow(sqrt(x[i]*x[i]+y[i]*y[i]),3))*deltat*y[i] +yv[i];
-        x[i+1]=xv[i+1]*deltat + x[i];
-        y[i+1]=yv[i+1]*deltat + y[i]; 
+        
+        x[i+1]=xv[i]*deltat + x[i];
+        y[i+1]=yv[i]*deltat + y[i]; 
+        
         momento[i+1]=x[i]*yv[i]-y[i]*xv[i];
-        energia[i+1]=G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i]);
+        energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i]);
     }
     
     ofstream outfile;
@@ -106,7 +108,10 @@ void leapFrog(double x0, double xv0, double y0, double yv0, double deltat ,doubl
         xv[i+1]=-G*(M/pow(sqrt(x[i]*x[i]+y[i]*y[i]),3))*deltat*x[i] +xv[i];
         yv[i+1]=-G*(M/pow(sqrt(x[i]*x[i]+y[i]*y[i]),3))*deltat*y[i] +yv[i];
         x[i+1]=xv[i+1]*deltat + x[i];
-        y[i+1]=yv[i+1]*deltat + y[i];       
+        y[i+1]=yv[i+1]*deltat + y[i]; 
+        
+        momento[i+1]=x[i]*yv[i]-y[i]*xv[i];
+        energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i]);
     }
     
     ofstream outfile;
@@ -170,6 +175,9 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
         t[i+1]=t[i]+deltat;
         x[i+1]=x[i]+deltat*xpendProm;
         y[i+1]=y[i]+deltat*ypendProm;
+        
+        momento[i+1]=x[i]*yv[i]-y[i]*xv[i];
+        energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i]);
             
 
     }
