@@ -14,7 +14,7 @@ int main()
     double vxini=-6.35;
     double yini=0.9772;
     double vyini=0.606;
-    double dt1=0.1;
+    double dt1=0.08;
     double dt2=0.01;
     double dt3=0.001;
     
@@ -52,7 +52,7 @@ void euler(double x0, double xv0, double y0, double yv0, double deltat ,double a
     y[0]=y0;
     t[0]=0;
     momento[0]=x[0]*yv[0]-y[0]*xv[0];
-    energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0]);
+    energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0])+0.5*m*(xv[0]*xv[0]+yv[0]*yv[0]);
     
     
     
@@ -66,7 +66,7 @@ void euler(double x0, double xv0, double y0, double yv0, double deltat ,double a
         y[i+1]=yv[i]*deltat + y[i]; 
         
         momento[i+1]=x[i]*yv[i]-y[i]*xv[i];
-        energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i]);
+        energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i])+0.5*m*(xv[i]*xv[i]+yv[i]*yv[i]);
     }
     
     ofstream outfile;
@@ -100,7 +100,7 @@ void leapFrog(double x0, double xv0, double y0, double yv0, double deltat ,doubl
     y[0]=y0;
     t[0]=0;
     momento[0]=x[0]*yv[0]-y[0]*xv[0];
-    energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0]);
+    energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0])+0.5*m*(xv[0]*xv[0]+yv[0]*yv[0]);
     
     for(int i=0;i<n-1;i++)
     {   
@@ -111,7 +111,7 @@ void leapFrog(double x0, double xv0, double y0, double yv0, double deltat ,doubl
         y[i+1]=yv[i+1]*deltat + y[i]; 
         
         momento[i+1]=x[i]*yv[i]-y[i]*xv[i];
-        energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i]);
+        energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i])+0.5*m*(xv[i]*xv[i]+yv[i]*yv[i]);
     }
     
     ofstream outfile;
@@ -144,40 +144,79 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
     y[0]=y0;
     t[0]=0;
     momento[0]=x[0]*yv[0]-y[0]*xv[0];
-    energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0]);
+    energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0])+0.5*m*(xv[0]*xv[0]+yv[0]*yv[0]);
     
     for(int i=0;i<n-1;i++)
     {   
-        double xk1=-G*(M/pow(sqrt(x[i]*x[i]+y[i]*y[i]),3))*x[i];
-        double yk1=-G*(M/pow(sqrt(x[i]*x[i]+y[i]*y[i]),3))*y[i];
+        double xk1=xv[i];
+        double yk1=yv[i];
+        
+        double xvk1=-G*(M/pow(sqrt(x[i]*x[i]+y[i]*y[i]),3))*x[i];
+        double yvk1=-G*(M/pow(sqrt(x[i]*x[i]+y[i]*y[i]),3))*y[i];
         
         double t1=t[i]+deltat*0.5;
+        
         double x1=x[i]+deltat*0.5*xk1;
         double y1=y[i]+deltat*0.5*yk1;
-        double xk2=-G*(M/pow(sqrt(x1*x1+y1*y1),3))*x1;
-        double yk2=-G*(M/pow(sqrt(x1*x1+y1*y1),3))*y1;
         
+        double xv1=xv[i]+deltat*0.5*xvk1;
+        double yv1=yv[i]+deltat*0.5*yvk1;
+        
+        double xk2=xv1;
+        double yk2=yv1;
+        
+        double xvk2=-G*(M/pow(sqrt(x1*x1+y1*y1),3))*x1;
+        double yvk2=-G*(M/pow(sqrt(x1*x1+y1*y1),3))*y1;
+        
+        //
         double t2=t[i]+deltat*0.5;
+        
         double x2=x[i]+deltat*0.5*xk2;
         double y2=y[i]+deltat*0.5*yk2;
-        double xk3=-G*(M/pow(sqrt(x2*x2+y2*y2),3))*x2;
-        double yk3=-G*(M/pow(sqrt(x2*x2+y2*y2),3))*y2;
         
-        double t3=t[i]+deltat;
-        double x3=x[i]+deltat*xk3;
-        double y3=y[i]+deltat*yk3;
-        double xk4=-G*(M/pow(sqrt(x3*x3+y3*y3),3))*x3;
-        double yk4=-G*(M/pow(sqrt(x3*x3+y3*y3),3))*y3;
+        double xv2=xv[i]+deltat*0.5*xvk2;
+        double yv2=yv[i]+deltat*0.5*yvk2;
+        
+        double xk3=xv2;
+        double yk3=yv2;
+        
+        double xvk3=-G*(M/pow(sqrt(x2*x2+y2*y2),3))*x2;
+        double yvk3=-G*(M/pow(sqrt(x2*x2+y2*y2),3))*y2;
+        
+        //
+        
+        double t3=t[i]+deltat*0.5;
+        
+        double x3=x[i]+deltat*0.5*xk3;
+        double y3=y[i]+deltat*0.5*yk3;
+        
+        double xv3=xv[i]+deltat*0.5*xvk3;
+        double yv3=yv[i]+deltat*0.5*yvk3;
+        
+        double xk4=xv3;
+        double yk4=yv3;     
+        
+        double xvk4=-G*(M/pow(sqrt(x3*x3+y3*y3),3))*x3;
+        double yvk4=-G*(M/pow(sqrt(x3*x3+y3*y3),3))*y3;        
+        //
         
         double xpendProm=(xk1 + 2.0*xk2 + 2.0*xk3 + xk4)/6.0;
-        double ypendProm=(yk1 + 2.0*yk2 + 2.0*yk3 + yk4)/6.0;   
+        double ypendProm=(yk1 + 2.0*yk2 + 2.0*yk3 + yk4)/6.0;
+        
+        double xvpendProm=(xvk1 + 2.0*xvk2 + 2.0*xvk3 + xvk4)/6.0;
+        double yvpendProm=(yvk1 + 2.0*yvk2 + 2.0*yvk3 + yvk4)/6.0;
         
         t[i+1]=t[i]+deltat;
         x[i+1]=x[i]+deltat*xpendProm;
         y[i+1]=y[i]+deltat*ypendProm;
         
+        xv[i+1]=xv[i]+deltat*xvpendProm;
+        yv[i+1]=yv[i]+deltat*yvpendProm;
+        
+        
+        
         momento[i+1]=x[i]*yv[i]-y[i]*xv[i];
-        energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i]);
+        energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i])+0.5*m*(xv[i]*xv[i]+yv[i]*yv[i]);
             
 
     }
