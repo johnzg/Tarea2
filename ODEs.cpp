@@ -14,7 +14,7 @@ int main()
     double vxini=-6.35;
     double yini=0.9772;
     double vyini=0.606;
-    double dt1=0.08;
+    double dt1=0.075;
     double dt2=0.01;
     double dt3=0.001;
     
@@ -51,7 +51,7 @@ void euler(double x0, double xv0, double y0, double yv0, double deltat ,double a
     x[0]=x0;
     y[0]=y0;
     t[0]=0;
-    momento[0]=x[0]*yv[0]-y[0]*xv[0];
+    momento[0]=m*(x[0]*yv[0]-y[0]*xv[0]);
     energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0])+0.5*m*(xv[0]*xv[0]+yv[0]*yv[0]);
     
     
@@ -65,7 +65,7 @@ void euler(double x0, double xv0, double y0, double yv0, double deltat ,double a
         x[i+1]=xv[i]*deltat + x[i];
         y[i+1]=yv[i]*deltat + y[i]; 
         
-        momento[i+1]=x[i]*yv[i]-y[i]*xv[i];
+        momento[i+1]=m*(x[i]*yv[i]-y[i]*xv[i]);
         energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i])+0.5*m*(xv[i]*xv[i]+yv[i]*yv[i]);
     }
     
@@ -99,7 +99,7 @@ void leapFrog(double x0, double xv0, double y0, double yv0, double deltat ,doubl
     x[0]=x0;
     y[0]=y0;
     t[0]=0;
-    momento[0]=x[0]*yv[0]-y[0]*xv[0];
+    momento[0]=m*(x[0]*yv[0]-y[0]*xv[0]);
     energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0])+0.5*m*(xv[0]*xv[0]+yv[0]*yv[0]);
     
     for(int i=0;i<n-1;i++)
@@ -110,7 +110,7 @@ void leapFrog(double x0, double xv0, double y0, double yv0, double deltat ,doubl
         x[i+1]=xv[i+1]*deltat + x[i];
         y[i+1]=yv[i+1]*deltat + y[i]; 
         
-        momento[i+1]=x[i]*yv[i]-y[i]*xv[i];
+        momento[i+1]=m*(x[0]*yv[0]-y[0]*xv[0]);
         energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i])+0.5*m*(xv[i]*xv[i]+yv[i]*yv[i]);
     }
     
@@ -143,7 +143,7 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
     x[0]=x0;
     y[0]=y0;
     t[0]=0;
-    momento[0]=x[0]*yv[0]-y[0]*xv[0];
+    momento[0]=m*(x[0]*yv[0]-y[0]*xv[0]);
     energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0])+0.5*m*(xv[0]*xv[0]+yv[0]*yv[0]);
     
     for(int i=0;i<n-1;i++)
@@ -154,7 +154,8 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
         double xvk1=-G*(M/pow(sqrt(x[i]*x[i]+y[i]*y[i]),3))*x[i];
         double yvk1=-G*(M/pow(sqrt(x[i]*x[i]+y[i]*y[i]),3))*y[i];
         
-        double t1=t[i]+deltat*0.5;
+        //double t1=t[i]+deltat*0.5; innecesario para este caso
+        //
         
         double x1=x[i]+deltat*0.5*xk1;
         double y1=y[i]+deltat*0.5*yk1;
@@ -169,7 +170,7 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
         double yvk2=-G*(M/pow(sqrt(x1*x1+y1*y1),3))*y1;
         
         //
-        double t2=t[i]+deltat*0.5;
+        // double t2=t[i]+deltat*0.5; innecesario para este caso
         
         double x2=x[i]+deltat*0.5*xk2;
         double y2=y[i]+deltat*0.5*yk2;
@@ -184,14 +185,13 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
         double yvk3=-G*(M/pow(sqrt(x2*x2+y2*y2),3))*y2;
         
         //
+        // double t3=t[i]+deltat*0.5; innecesario para este caso
         
-        double t3=t[i]+deltat*0.5;
+        double x3=x[i]+deltat*xk3;
+        double y3=y[i]+deltat*yk3;
         
-        double x3=x[i]+deltat*0.5*xk3;
-        double y3=y[i]+deltat*0.5*yk3;
-        
-        double xv3=xv[i]+deltat*0.5*xvk3;
-        double yv3=yv[i]+deltat*0.5*yvk3;
+        double xv3=xv[i]+deltat*xvk3;
+        double yv3=yv[i]+deltat*yvk3;
         
         double xk4=xv3;
         double yk4=yv3;     
@@ -207,6 +207,7 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
         double yvpendProm=(yvk1 + 2.0*yvk2 + 2.0*yvk3 + yvk4)/6.0;
         
         t[i+1]=t[i]+deltat;
+        
         x[i+1]=x[i]+deltat*xpendProm;
         y[i+1]=y[i]+deltat*ypendProm;
         
@@ -215,10 +216,8 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
         
         
         
-        momento[i+1]=x[i]*yv[i]-y[i]*xv[i];
+        momento[i+1]=m*(x[i]*yv[i]-y[i]*xv[i]);
         energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i])+0.5*m*(xv[i]*xv[i]+yv[i]*yv[i]);
-            
-
     }
     
     ofstream outfile;
