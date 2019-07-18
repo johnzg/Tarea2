@@ -16,7 +16,7 @@ int main()
     double vyini=0.606;
     double dt1=0.1;
     double dt2=0.01;
-    double dt3=0.0001;
+    double dt3=0.001;
     
     leapFrog(xini,vxini,yini,vyini,dt1,orbitas,1);
     euler(xini,vxini,yini,vyini,dt1, orbitas,1);
@@ -36,6 +36,7 @@ int main()
 void euler(double x0, double xv0, double y0, double yv0, double deltat ,double anios, int numDeltat)
 {
     double M=1.0;
+    double m=3.00273*pow(10,-6);
     double G = 39.478;
     int n=(anios/deltat)+1;
     double x[n];
@@ -43,11 +44,17 @@ void euler(double x0, double xv0, double y0, double yv0, double deltat ,double a
     double xv[n];
     double yv[n];
     double t[n];
+    double momento[n];
+    double energia[n];
     xv[0]=xv0;
     yv[0]=yv0;
     x[0]=x0;
     y[0]=y0;
     t[0]=0;
+    momento[0]=x[0]*yv[0]+y[0]*xv[0];
+    energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0]);
+    
+    
     
     for(int i=0;i<n-1;i++)
     {   
@@ -55,14 +62,16 @@ void euler(double x0, double xv0, double y0, double yv0, double deltat ,double a
         xv[i+1]=-G*(M/pow(sqrt(x[i]*x[i]+y[i]*y[i]),3))*deltat*x[i] +xv[i];
         yv[i+1]=-G*(M/pow(sqrt(x[i]*x[i]+y[i]*y[i]),3))*deltat*y[i] +yv[i];
         x[i+1]=xv[i+1]*deltat + x[i];
-        y[i+1]=yv[i+1]*deltat + y[i];       
+        y[i+1]=yv[i+1]*deltat + y[i]; 
+        momento[i+1]=x[i]*yv[i]+y[i]*xv[i];
+        energia[i+1]=G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i]);
     }
     
     ofstream outfile;
     outfile.open("euler_dt"+std::to_string(numDeltat)+".dat");
     for(int i=0;i<n;i++)
     {
-        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<endl;
+        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<" "<<momento[i]<<" "<<energia[i]<<endl;
     }
     outfile.close();
        
@@ -70,6 +79,8 @@ void euler(double x0, double xv0, double y0, double yv0, double deltat ,double a
 void leapFrog(double x0, double xv0, double y0, double yv0, double deltat ,double anios, int numDeltat)
 {
     double M=1.0;
+    double m=3.00273*pow(10,-6);
+
     double G = 39.478;
     int n=(anios/deltat)+1;
     double xvi=G*(M/pow(sqrt(x0*x0+y0*y0),3))*deltat*0.5+xv0;
@@ -79,11 +90,15 @@ void leapFrog(double x0, double xv0, double y0, double yv0, double deltat ,doubl
     double xv[n];
     double yv[n];
     double t[n];
+    double momento[n];
+    double energia[n];
     xv[0]=xvi;
     yv[0]=yvi;
     x[0]=x0;
     y[0]=y0;
     t[0]=0;
+    momento[0]=x[0]*yv[0]+y[0]*xv[0];
+    energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0]);
     
     for(int i=0;i<n-1;i++)
     {   
@@ -98,7 +113,7 @@ void leapFrog(double x0, double xv0, double y0, double yv0, double deltat ,doubl
     outfile.open("leapFrog_dt"+std::to_string(numDeltat)+".dat");
     for(int i=0;i<n;i++)
     {
-        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<endl;
+        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<" "<<momento[i]<<" "<<energia[i]<<endl;
     }
     outfile.close();
        
@@ -107,6 +122,8 @@ void leapFrog(double x0, double xv0, double y0, double yv0, double deltat ,doubl
 void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,double anios, int numDeltat)
 {
     double M=1.0;
+    double m=3.00273*pow(10,-6);
+
     double G = 39.478;
     int n=(anios/deltat)+1;
     double x[n];
@@ -114,11 +131,15 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
     double xv[n];
     double yv[n];
     double t[n];
+    double momento[n];
+    double energia[n];
     xv[0]=xv0;
     yv[0]=yv0;
     x[0]=x0;
     y[0]=y0;
     t[0]=0;
+    momento[0]=x[0]*yv[0]+y[0]*xv[0];
+    energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0]);
     
     for(int i=0;i<n-1;i++)
     {   
@@ -157,7 +178,7 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
     outfile.open("rungeKutta_dt"+std::to_string(numDeltat)+".dat");
     for(int i=0;i<n;i++)
     {
-        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<endl;
+        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<" "<<momento[i]<<" "<<energia[i]<<endl;
     }
     outfile.close();
        
