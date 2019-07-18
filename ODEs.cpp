@@ -14,10 +14,22 @@ int main()
     double vxini=-6.35;
     double yini=0.9772;
     double vyini=0.606;
-    double dt1=0.01;
+    double dt1=0.1;
+    double dt2=0.01;
+    double dt3=0.0001;
+    
     leapFrog(xini,vxini,yini,vyini,dt1,orbitas,1);
     euler(xini,vxini,yini,vyini,dt1, orbitas,1);
     rungeKutta(xini,vxini,yini,vyini,dt1, orbitas,1);
+    
+    leapFrog(xini,vxini,yini,vyini,dt2,orbitas,2);
+    euler(xini,vxini,yini,vyini,dt2, orbitas,2);
+    rungeKutta(xini,vxini,yini,vyini,dt2, orbitas,2);
+    
+    leapFrog(xini,vxini,yini,vyini,dt3,orbitas,3);
+    euler(xini,vxini,yini,vyini,dt3, orbitas,3);
+    rungeKutta(xini,vxini,yini,vyini,dt3, orbitas,3);
+    
     return 0;
 }
 
