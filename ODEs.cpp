@@ -144,7 +144,7 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
     y[0]=y0;
     t[0]=0;
     momento[0]=m*(x[0]*yv[0]-y[0]*xv[0]);
-    energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0])+0.5*m*(xv[0]*xv[0]+yv[0]*yv[0]);
+    energia[0]=-G*(m*M)/sqrt(x[0]*x[0]+y[0]*y[0]);//+0.5*m*(xv[0]*xv[0]+yv[0]*yv[0]);
     
     for(int i=0;i<n-1;i++)
     {   
@@ -216,8 +216,8 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
         
         
         
-        momento[i+1]=m*(x[i]*yv[i]-y[i]*xv[i]);
-        energia[i+1]=-G*(m*M)/sqrt(x[i]*x[i]+y[i]*y[i])+0.5*m*(xv[i]*xv[i]+yv[i]*yv[i]);
+        momento[i+1]=m*(x[i+1]*yv[i+1]-y[i+1]*xv[i+1]);
+        energia[i+1]=-G*(m*M)/sqrt(x[i+1]*x[i+1]+y[i+1]*y[i+1]);//+0.5*m*(xv[i]*xv[i]+yv[i]*yv[i]);
     }
     
     ofstream outfile;
