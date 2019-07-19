@@ -78,7 +78,7 @@ plt.title("Runge Kutta dt = 0.001 yr")
 plt.xlabel("t(anios)")
 
 
-plt.savefig("Mome_met_dt.png")
+plt.savefig("Mome_met_dt.pdf")
 
 #Graficando orbitas:
 
@@ -157,7 +157,7 @@ plt.title("Runge Kutta dt = 0.001 yr")
 plt.xlabel("x(AU)")
 
 
-plt.savefig("XY_met_dt.png")
+plt.savefig("XY_met_dt.pdf")
 
 #Graficando velocidades 
 
@@ -236,7 +236,7 @@ plt.title("Runge Kutta dt = 0.001 yr")
 plt.xlabel("vx(AU/anio)")
 
 
-plt.savefig("VxVy_met_dt.png")
+plt.savefig("VxVy_met_dt.pdf")
 
 #Graficando energia
 
@@ -315,4 +315,4 @@ plt.title("Runge Kutta dt = 0.001 yr")
 plt.xlabel("t(anio)")
 
 
-plt.savefig("Ener_met_dt.png")
+plt.savefig("Ener_met_dt.pdf")

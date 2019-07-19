@@ -25,7 +25,7 @@ plt.subplot(1,2,2)
 plt.imshow(transFelizOrdenada.real,vmin=-70,vmax=70)
 plt.title("Espectro Fourier Feliz")
 
-plt.savefig("espectroFourierImagenes.png")
+plt.savefig("FFtIm.pdf")
 
 #filtrando espectro de Fourier de las imagenes
 aux=np.zeros((254,170),dtype=bool)
@@ -46,22 +46,32 @@ transFelizFiltrada=np.where(aux ,transFeliz,0)
 seriaFiltrada=np.fft.ifft2(transSeriaFiltrada)
 felizFiltrada=np.fft.ifft2(transFelizFiltrada)
 
+transSeriaFiltradaOrdenada=np.fft.fftshift(transSeriaFiltrada)
+transFelizFiltradaOrdenada=np.fft.fftshift(transFelizFiltrada)
 
 #Graficando las imagenes recuperadas
 
-plt.figure()
+plt.figure(figsize=(9,9))
 
-plt.subplot(1,2,1)
+plt.subplot(2,2,1)
 plt.axis('off')
 plt.imshow(-seriaFiltrada.real,cmap='Greys')
 plt.title("Seria Filtrada")
 
-plt.subplot(1,2,2)
+plt.subplot(2,2,2)
 plt.axis('off')
 plt.imshow(-felizFiltrada.real,cmap='Greys')
 plt.title("Feliz Filtrada")
 
-plt.savefig("imagenesFiltradas.png")
+plt.subplot(2,2,3)
+plt.imshow(transSeriaFiltradaOrdenada.real,vmin=-70,vmax=70)
+plt.title("Espectro Fourier Seria Filtrada")
+
+plt.subplot(2,2,4)
+plt.imshow(transFelizFiltradaOrdenada.real,vmin=-70,vmax=70)
+plt.title("Espectro Fourier Feliz Filtrada")
+
+plt.savefig("ImProceso.pdf")
 
 #Creando la imagen hibrida a partir de las imagenes filtradas anteriormente
 
@@ -77,4 +87,4 @@ plt.figure()
 plt.axis('off')
 plt.imshow(-hibrida.real,cmap='Greys')
 plt.title("Imagen Hibrida")
-plt.savefig("Hibrida.png")
+plt.savefig("Hibrida.pdf")
