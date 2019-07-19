@@ -1,0 +1,76 @@
+
+ 
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[spanish]{babel} 
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc} 
+\usepackage{lmodern} 
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+ 
+\begin{document}
+ 
+
+ 
+\title{Análisis Resultados}
+\author{John Sebastian Zarate Guevara\\ 
+201530579}
+
+
+\maketitle
+\section{Fourier}
+Para este ejercicio lo primero que hice fue obtener la transformada de Fourier utilizando los paquetes de numpy. estos no la dan en el orden en que se ven en la figura por lo tanto use fft.fftshif para ordenarla.
+\begin{figure}[ht]
+\includegraphics[width=14cm]{FFtIm.pdf}
+\centering
+\end{figure}
+
+Posterior a esto use un filtro con el cual removí las amplitudes menores a 24 de la imagen seria eliminando así los detalles de esta. De la misma forma deje solo las amplitudes mayores a 16 de la imagen feliz con lo cual deje solo los detalles.
+\begin{figure}[ht]
+\includegraphics[width=14cm]{ImProceso.pdf}
+\centering
+\caption{imágenes filtradas con sus respectivos espectros de Fourier}
+\end{figure}
+
+por ultimo sumé los espectros de estas imágenes multiplicando la amplitud del espectro de la seria por 0.7 y de la feliz por 2.5 con el fin de darle mas fuerza a los detalles. usando la transformada inversa de numpy obtuve la imagen híbrida:
+
+\begin{figure}[ht]
+\includegraphics[width=14cm]{Hibrida.pdf}
+\centering
+\caption{Hibrida}
+\end{figure}
+
+\section{Ecuación Diferencia Ordinaria Orbita Tierra}
+
+\begin{figure}[ht]
+\includegraphics[width=17cm]{XY_met_dt.pdf}
+\centering
+\caption{posicion en x vs posicion en y}
+\end{figure}
+
+\begin{figure}[ht]
+\includegraphics[width=17cm]{VxVy_met_dt.pdf}
+\centering
+\caption{velocidad en x vs velocidad en y}
+\end{figure}
+
+\begin{figure}[ht]
+\includegraphics[width=17cm]{Mome_met_dt.pdf}
+\centering
+\caption{momento vs tiempo}
+\end{figure}
+\begin{figure}[ht]
+\includegraphics[width=17cm]{Ener_met_dt.pdf}
+\centering
+\caption{energía vs tiempo}
+\end{figure}
+para este punto escogí los $\Delta t$ como 0.075, 0.01, 0.001. Una primera medida de la precisión de los métodos es el gráfico de la orbita y de velocidad en los que se ve que Euler es el método con menor precisión y Runge Kutta el mejor. Además sabemos que en este sistema físico la energía y el momento angular se conservan con lo cual esta también es una medida de la precisión de los métodos con la cual se ratifica que Runge Kutta es el que tiene mayor precisión mientras que Euler es el que tiene mas error. 
+
+Nota: Mi archivo make no genera mi pdf porque no lo podía probar debido a que en binder es imposible por lo tanto adjunto el pdf junto a el .tex. para que mi archivo make lo genere basta cambiar el target all por Resultados$\_$hw2.pdf y agregar el comando pdflatex Resultados$\_$hw2.tex 
+\end{document}
+
