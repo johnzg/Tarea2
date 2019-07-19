@@ -10,7 +10,7 @@ t=data[:,0]
 m=data[:,3]
 plt.subplot(3,3,1)
 plt.plot(t,m,color="blue")
-plt.title("Euler dt = 0.75 yr")
+plt.title("Euler dt = 0.075 yr")
 plt.ylabel("momento(Mso*AU*AU/anio)")
 
 data=np.genfromtxt("euler_dt2.dat")
@@ -33,7 +33,7 @@ t=data[:,0]
 m=data[:,3]
 plt.subplot(3,3,4)
 plt.plot(t,m,color="red")
-plt.title("Leap Frog dt = 0.75 yr")
+plt.title("Leap Frog dt = 0.075 yr")
 plt.ylabel("momento(Mso*AU*AU/anio)")
 
 data=np.genfromtxt("leapFrog_dt2.dat")
@@ -56,7 +56,7 @@ t=data[:,0]
 m=data[:,3]
 plt.subplot(3,3,7)
 plt.plot(t,m,color="green")
-plt.title("Runge Kutta dt = 0.75 yr")
+plt.title("Runge Kutta dt = 0.075 yr")
 plt.xlabel("t(anios)")
 plt.ylabel("momento(Mso*AU*AU/anio)")
 
@@ -89,7 +89,7 @@ x=data[:,1]
 y=data[:,2]
 plt.subplot(3,3,1)
 plt.plot(x,y,color="blue")
-plt.title("Euler dt = 0.75 yr")
+plt.title("Euler dt = 0.075 yr")
 plt.ylabel("y(AU)")
 
 data=np.genfromtxt("euler_dt2.dat")
@@ -113,7 +113,7 @@ x=data[:,1]
 y=data[:,2]
 plt.subplot(3,3,4)
 plt.plot(x,y,color="red")
-plt.title("Leap Frog dt = 0.75 yr")
+plt.title("Leap Frog dt = 0.075 yr")
 plt.ylabel("y(AU)")
 
 data=np.genfromtxt("leapFrog_dt2.dat")
@@ -135,7 +135,7 @@ x=data[:,1]
 y=data[:,2]
 plt.subplot(3,3,7)
 plt.plot(x,y,color="green")
-plt.title("Runge Kutta dt = 0.75 yr")
+plt.title("Runge Kutta dt = 0.075 yr")
 plt.xlabel("x(AU)")
 plt.ylabel("y(AU)")
 
@@ -168,7 +168,7 @@ xv=data[:,5]
 yv=data[:,6]
 plt.subplot(3,3,1)
 plt.plot(xv,yv,color="blue")
-plt.title("Euler dt = 0.75 yr")
+plt.title("Euler dt = 0.075 yr")
 plt.ylabel("vy(AU/anio)")
 
 data=np.genfromtxt("euler_dt2.dat")
@@ -192,7 +192,7 @@ xv=data[:,5]
 yv=data[:,6]
 plt.subplot(3,3,4)
 plt.plot(xv,yv,color="red")
-plt.title("Leap Frog dt = 0.75 yr")
+plt.title("Leap Frog dt = 0.075 yr")
 plt.ylabel("vy(AU/anio)")
 
 data=np.genfromtxt("leapFrog_dt2.dat")
@@ -214,7 +214,7 @@ xv=data[:,5]
 yv=data[:,6]
 plt.subplot(3,3,7)
 plt.plot(xv,yv,color="green")
-plt.title("Runge Kutta dt = 0.75 yr")
+plt.title("Runge Kutta dt = 0.075 yr")
 plt.xlabel("vx(AU/anio)")
 plt.ylabel("vy(AU/anio)")
 
@@ -247,7 +247,7 @@ t=data[:,0]
 u=data[:,4]
 plt.subplot(3,3,1)
 plt.plot(t,u,color="blue")
-plt.title("Euler dt = 0.75 yr")
+plt.title("Euler dt = 0.075 yr")
 plt.ylabel("energia(Msol*AU*AU/(anio*anio))")
 
 data=np.genfromtxt("euler_dt2.dat")
@@ -271,7 +271,7 @@ t=data[:,0]
 u=data[:,4]
 plt.subplot(3,3,4)
 plt.plot(t,u,color="red")
-plt.title("Leap Frog dt = 0.75 yr")
+plt.title("Leap Frog dt = 0.075 yr")
 plt.ylabel("energia(Msol*AU*AU/(anio*anio))")
 
 data=np.genfromtxt("leapFrog_dt2.dat")
@@ -293,7 +293,7 @@ t=data[:,0]
 u=data[:,4]
 plt.subplot(3,3,7)
 plt.plot(t,u,color="green")
-plt.title("Runge Kutta dt = 0.75 yr")
+plt.title("Runge Kutta dt = 0.075 yr")
 plt.xlabel("t(anio)")
 plt.ylabel("energia(Msol*AU*AU/(anio*anio))")
 
