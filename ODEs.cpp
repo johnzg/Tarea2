@@ -73,7 +73,7 @@ void euler(double x0, double xv0, double y0, double yv0, double deltat ,double a
     outfile.open("euler_dt"+std::to_string(numDeltat)+".dat");
     for(int i=0;i<n;i++)
     {
-        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<" "<<momento[i]<<" "<<energia[i]<<endl;
+        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<" "<<momento[i]<<" "<<energia[i]<<" "<<xv[i]<<" "<<yv[i]<<endl;
     }
     outfile.close();
        
@@ -118,7 +118,7 @@ void leapFrog(double x0, double xv0, double y0, double yv0, double deltat ,doubl
     outfile.open("leapFrog_dt"+std::to_string(numDeltat)+".dat");
     for(int i=0;i<n;i++)
     {
-        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<" "<<momento[i]<<" "<<energia[i]<<endl;
+        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<" "<<momento[i]<<" "<<energia[i]<<" "<<xv[i]<<" "<<yv[i]<<endl;
     }
     outfile.close();
        
@@ -224,7 +224,7 @@ void rungeKutta(double x0, double xv0, double y0, double yv0, double deltat ,dou
     outfile.open("rungeKutta_dt"+std::to_string(numDeltat)+".dat");
     for(int i=0;i<n;i++)
     {
-        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<" "<<momento[i]<<" "<<energia[i]<<endl;
+        outfile<<t[i]<<" "<<x[i]<<" "<<y[i]<<" "<<momento[i]<<" "<<energia[i]<<" "<<xv[i]<<" "<<yv[i]<<endl;
     }
     outfile.close();
        
